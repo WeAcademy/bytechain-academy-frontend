@@ -5,7 +5,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen text-black bg-white">
       <div
         className="flex flex-col items-center bg-white shadow-lg"
         style={{
