@@ -71,7 +71,7 @@ export default function CurrencyHub() {
           {data.map((coin, index) => (
             <div
               key={index}
-              className="grid grid-cols-[0.5fr_0.5fr_2fr_1.5fr_1fr_1fr_1fr_2fr_2fr] gap-4 p-3 text-gray-800 border-b items-center"
+              className="grid grid-cols-[0.5fr_0.5fr_2fr_1.5fr_1fr_1fr_1fr_2fr_2fr] gap-4 p-3 text-gray-800 border-b-2 items-center"
             >
               <button
                 onClick={() => toggleFavorite(coin.rank)}
