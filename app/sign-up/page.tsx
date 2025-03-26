@@ -1,134 +1,181 @@
 "use client";
 
-import type React from "react";
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { EyeOff, EyeIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { signUpValidationSchema } from "@/utils/validationSchema";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Form state
-  const [formData, setFormData] = useState({
+  const initialValues = {
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
-  });
-
-  // Error state
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Invalid email format";
-
-    if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords don't match";
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      alert("Sign up successful!");
-    }
+  const handleSubmit = (values: typeof initialValues) => {
+    console.log("Form submitted:", values);
+    alert("Sign up successful!");
   };
-
-  // Form fields array for mapping
-  const formFields = [
-    { id: "fullName", label: "Full Name", type: "text" },
-    { id: "email", label: "Email", type: "email" },
-    {
-      id: "password",
-      label: "Password",
-      type: showPassword ? "text" : "password",
-      toggle: () => setShowPassword(!showPassword),
-      showIcon: showPassword,
-    },
-    {
-      id: "confirmPassword",
-      label: "Confirm Password",
-      type: showConfirmPassword ? "text" : "password",
-      toggle: () => setShowConfirmPassword(!showConfirmPassword),
-      showIcon: showConfirmPassword,
-    },
-  ];
 
   return (
     <div className="w-full min-h-screen max-w-md mx-auto py-11 space-y-5 px-4">
       <div className="flex justify-center md:justify-start relative md:-left-14">
         <Image
           src="/icons/bytechain.svg"
-          width={0}
-          height={0}
+          width={270}
+          height={90}
           className="w-[270px] md:w-[220px] h-[90px] md:h-[70px]"
           alt="bytechain logo"
         />
       </div>
 
-      <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-        {formFields.map(({ id, label, type, toggle, showIcon }) => (
-          <div key={id} className="space-y-1">
-            <label htmlFor={id} className="block text-lg font-bold">
-              {label}
-            </label>
-            <div className="relative">
-              <input
-                id={id}
-                name={id}
-                type={type}
-                value={formData[id as keyof typeof formData]}
-                onChange={handleChange}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={signUpValidationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
+          <Form className="space-y-6">
+            {/* Full Name Field */}
+            <div className="space-y-1">
+              <label htmlFor="fullName" className="block text-lg font-bold">
+                Full Name
+              </label>
+              <Field
+                id="fullName"
+                name="fullName"
+                type="text"
                 className={`w-full px-3 py-4 border ${
-                  errors[id] ? "border-red-500" : "border-[#00D4FF]"
+                  errors.fullName && touched.fullName
+                    ? "border-red-500"
+                    : "border-[#00D4FF]"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
-                required
+                aria-invalid={errors.fullName && touched.fullName ? "true" : "false"}
+                aria-describedby={errors.fullName && touched.fullName ? "fullName-error" : undefined}
               />
-              {toggle && (
+              <ErrorMessage name="fullName">
+                {(msg) => (
+                  <p id="fullName-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                    {msg}
+                  </p>
+                )}
+              </ErrorMessage>
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-1">
+              <label htmlFor="email" className="block text-lg font-bold">
+                Email
+              </label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                className={`w-full px-3 py-4 border ${
+                  errors.email && touched.email ? "border-red-500" : "border-[#00D4FF]"
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
+                aria-invalid={errors.email && touched.email ? "true" : "false"}
+                aria-describedby={errors.email && touched.email ? "email-error" : undefined}
+              />
+              <ErrorMessage name="email">
+                {(msg) => (
+                  <p id="email-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                    {msg}
+                  </p>
+                )}
+              </ErrorMessage>
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-1">
+              <label htmlFor="password" className="block text-lg font-bold">
+                Password
+              </label>
+              <div className="relative">
+                <Field
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className={`w-full px-3 py-4 border ${
+                    errors.password && touched.password ? "border-red-500" : "border-[#00D4FF]"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
+                  aria-invalid={errors.password && touched.password ? "true" : "false"}
+                  aria-describedby={errors.password && touched.password ? "password-error" : undefined}
+                />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-                  onClick={toggle}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label="Toggle password visibility"
                 >
-                  {showIcon ? <EyeOff size={20} /> : <EyeIcon size={20} />}
+                  {showPassword ? <EyeOff size={20} /> : <EyeIcon size={20} />}
                 </button>
-              )}
+              </div>
+              <ErrorMessage name="password">
+                {(msg) => (
+                  <p id="password-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                    {msg}
+                  </p>
+                )}
+              </ErrorMessage>
             </div>
-            {errors[id] && (
-              <p className="text-red-500 text-sm mt-1">{errors[id]}</p>
-            )}
-          </div>
-        ))}
 
-        <div className="px-10">
-          <button
-            type="submit"
-            className="bg-[#00D4FF] text-2xl w-full font-normal text-[#004755] py-5 px-4 rounded-[30px] hover:bg-[#00D4FF]/90 transition-colors"
-          >
-            Sign up
-          </button>
-        </div>
-      </form>
+            {/* Confirm Password Field */}
+            <div className="space-y-1">
+              <label htmlFor="confirmPassword" className="block text-lg font-bold">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Field
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className={`w-full px-3 py-4 border ${
+                    errors.confirmPassword && touched.confirmPassword ? "border-red-500" : "border-[#00D4FF]"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
+                  aria-invalid={errors.confirmPassword && touched.confirmPassword ? "true" : "false"}
+                  aria-describedby={errors.confirmPassword && touched.confirmPassword ? "confirmPassword-error" : undefined}
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  aria-label="Toggle confirm password visibility"
+                >
+                  {showConfirmPassword ? <EyeOff size={20} /> : <EyeIcon size={20} />}
+                </button>
+              </div>
+              <ErrorMessage name="confirmPassword">
+                {(msg) => (
+                  <p id="confirmPassword-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                    {msg}
+                  </p>
+                )}
+              </ErrorMessage>
+            </div>
 
+            {/* Submit Button */}
+            <div className="px-10">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`bg-[#00D4FF] text-2xl w-full font-normal text-[#004755] py-5 px-4 rounded-[30px] transition-colors 
+                ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-[#00D4FF]/90"}`}
+              >
+                {isSubmitting ? "Signing up..." : "Sign up"}
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+
+      {/* Login Redirect */}
       <div className="text-center mt-8">
         <p className="text-gray-700">
           Already Have An Account?{" "}
