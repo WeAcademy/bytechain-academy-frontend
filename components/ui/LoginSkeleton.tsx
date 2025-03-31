@@ -28,11 +28,10 @@ export default function LoginSkeleton() {
           gap: "32px",
         }}
       >
+      
         <div className="space-y-4 w-full max-w-[400px]">
          
-          {/* <div className="w-28 h-28 bg-gray-200 rounded-full animate-pulse mx-auto"></div> */}
-         
-          <img src="/logo.png" alt="ByteChain Logo" className="w-28" />
+          <img src="/skeleton_logo.png" alt="Skeleton Logo" className="w-28" />
           {/* Email Field Skeleton */}
           <div className="space-y-2">
             <div className="h-6 w-1/4 bg-gray-200 rounded animate-pulse"></div>
