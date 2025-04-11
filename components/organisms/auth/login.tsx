@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -20,7 +21,13 @@ export default function Login() {
         }}
       >
         <form className="space-y-4 w-full max-w-[400px]">
-          <img src="/logo.png" alt="ByteChain Logo" className="w-28" />
+          <Image
+            src="/icons/bytechain.svg"
+            alt="ByteChain Logo"
+            // className="w-28"
+            width={100}
+            height={100}
+          />
 
           {/* Email Field */}
           <div>
@@ -30,7 +37,7 @@ export default function Login() {
 
             <input
               type="email"
-              className="p-3 w-full rounded-md border outline-none focus:ring focus:ring-blue-300 w-[300px] h-[60px]"
+              className="p-3 w-full rounded-md border outline-none focus:ring focus:ring-blue-300 max-w-[300px] h-[60px]"
             />
           </div>
 
@@ -42,7 +49,7 @@ export default function Login() {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="p-2 w-full rounded-md border outline-none focus:ring focus:ring-blue-300 w-[300px] h-[60px]"
+                className="p-2 w-full rounded-md border outline-none focus:ring focus:ring-blue-300 max-w-[300px] h-[60px]"
               />
               <button
                 type="button"
@@ -70,7 +77,7 @@ export default function Login() {
 
           {/* Sign Up Link */}
           <p className="text-sm text-center text-gray-600">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="#" className="font-medium text-blue-500 hover:underline">
               Sign Up
             </a>

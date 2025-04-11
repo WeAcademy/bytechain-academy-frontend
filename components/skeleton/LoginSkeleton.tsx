@@ -1,19 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function LoginSkeleton() {
-  // const [isLoading, setIsLoading] = useState(true);
-
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 1500
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  // if (!isLoading) return null;
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <div
@@ -28,10 +16,14 @@ export default function LoginSkeleton() {
           gap: "32px",
         }}
       >
-      
         <div className="space-y-4 w-full max-w-[400px]">
-         
-          <img src="/skeleton_logo.png" alt="Skeleton Logo" className="w-28" />
+          <Image
+            src="/skeleton_logo.png"
+            alt="Skeleton Logo"
+            className="w-28"
+            width={100}
+            height={100}
+          />
           {/* Email Field Skeleton */}
           <div className="space-y-2">
             <div className="h-6 w-1/4 bg-gray-200 rounded animate-pulse"></div>

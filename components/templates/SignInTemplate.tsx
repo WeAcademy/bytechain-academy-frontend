@@ -1,9 +1,10 @@
 "use client";
-import Login from "@/components/ui/login";
-import { useEffect, useState } from "react";
-import LoginSkeleton from "@/components/ui/LoginSkeleton";
-import { LOADIPHLPAPI } from "dns";
-export default function SignIn() {
+import { useState, useEffect } from "react";
+import Login from "../organisms/auth/login";
+import LoginSkeleton from "../skeleton/LoginSkeleton";
+
+
+export default function SignInTemplate() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

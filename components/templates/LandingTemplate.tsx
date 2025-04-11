@@ -1,13 +1,14 @@
-"use client"
-import { useState, useEffect } from 'react';
-import AboutAndOffers from '@/components/AboutandOffers/AboutandOffers';
-import CurrencyHub from '@/components/CurrencyHub';
-import Footer from '@/components/Footer';
-import WhoItsFor from '@/components/WhoItsFor';
-import CoursesSection from '@/components/CoursesSection';
-import LandingPageSkeleton from '@/components/ui/LandingPageSkeleton';
+"use client";
+import { useState, useEffect } from "react";
+import CurrencyHub from "../organisms/landing-page/CurrencyHub";
 
-export default function Home() {
+import AboutAndOffers from "../organisms/landing-page/AboutandOffers";
+import CoursesSection from "../organisms/landing-page/CoursesSection";
+import LandingPageSkeleton from "../skeleton/LandingPageSkeleton";
+import WhoItsFor from "../organisms/landing-page/WhoItsFor";
+
+
+export default function LandingPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate data loading
@@ -34,9 +35,6 @@ export default function Home() {
           </div>
           <div className="fade-in">
             <WhoItsFor />
-          </div>
-          <div className="fade-in">
-            <Footer />
           </div>
         </main>
       )}

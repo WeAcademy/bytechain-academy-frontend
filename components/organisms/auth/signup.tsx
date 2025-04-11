@@ -1,24 +1,12 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { EyeOff, EyeIcon } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { signUpValidationSchema } from "@/utils/validationSchema";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { EyeOff, EyeIcon, Link } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
 
-export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
+const Signup = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const initialValues = {
     fullName: "",
     email: "",
@@ -30,31 +18,6 @@ export default function SignUpForm() {
     console.log("Form submitted:", values);
     alert("Sign up successful!");
   };
-
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen max-w-md mx-auto py-11 space-y-5 px-4">
-        <div className="flex justify-center md:justify-start relative md:-left-14">
-          <Skeleton width={270} height={90} />
-        </div>
-        <div className="space-y-6">
-          <Skeleton height={30} />
-          <Skeleton height={50} />
-          <Skeleton height={30} />
-          <Skeleton height={50} />
-          <Skeleton height={30} />
-          <Skeleton height={50} />
-          <Skeleton height={30} />
-          <Skeleton height={50} />
-          <Skeleton height={60} className="rounded-[30px]" />
-        </div>
-        <div className="text-center mt-8">
-          <Skeleton width={200} height={20} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full min-h-screen max-w-md mx-auto py-11 space-y-5 px-4 transition-opacity duration-500">
       <div className="flex justify-center md:justify-start relative md:-left-14">
@@ -88,12 +51,22 @@ export default function SignUpForm() {
                     ? "border-red-500"
                     : "border-[#00D4FF]"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
-                aria-invalid={errors.fullName && touched.fullName ? "true" : "false"}
-                aria-describedby={errors.fullName && touched.fullName ? "fullName-error" : undefined}
+                aria-invalid={
+                  errors.fullName && touched.fullName ? "true" : "false"
+                }
+                aria-describedby={
+                  errors.fullName && touched.fullName
+                    ? "fullName-error"
+                    : undefined
+                }
               />
               <ErrorMessage name="fullName">
                 {(msg) => (
-                  <p id="fullName-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                  <p
+                    id="fullName-error"
+                    className="text-red-500 text-sm mt-1"
+                    aria-live="assertive"
+                  >
                     {msg}
                   </p>
                 )}
@@ -110,14 +83,22 @@ export default function SignUpForm() {
                 name="email"
                 type="email"
                 className={`w-full px-3 py-4 border ${
-                  errors.email && touched.email ? "border-red-500" : "border-[#00D4FF]"
+                  errors.email && touched.email
+                    ? "border-red-500"
+                    : "border-[#00D4FF]"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
                 aria-invalid={errors.email && touched.email ? "true" : "false"}
-                aria-describedby={errors.email && touched.email ? "email-error" : undefined}
+                aria-describedby={
+                  errors.email && touched.email ? "email-error" : undefined
+                }
               />
               <ErrorMessage name="email">
                 {(msg) => (
-                  <p id="email-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                  <p
+                    id="email-error"
+                    className="text-red-500 text-sm mt-1"
+                    aria-live="assertive"
+                  >
                     {msg}
                   </p>
                 )}
@@ -135,10 +116,18 @@ export default function SignUpForm() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   className={`w-full px-3 py-4 border ${
-                    errors.password && touched.password ? "border-red-500" : "border-[#00D4FF]"
+                    errors.password && touched.password
+                      ? "border-red-500"
+                      : "border-[#00D4FF]"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
-                  aria-invalid={errors.password && touched.password ? "true" : "false"}
-                  aria-describedby={errors.password && touched.password ? "password-error" : undefined}
+                  aria-invalid={
+                    errors.password && touched.password ? "true" : "false"
+                  }
+                  aria-describedby={
+                    errors.password && touched.password
+                      ? "password-error"
+                      : undefined
+                  }
                 />
                 <button
                   type="button"
@@ -151,7 +140,11 @@ export default function SignUpForm() {
               </div>
               <ErrorMessage name="password">
                 {(msg) => (
-                  <p id="password-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                  <p
+                    id="password-error"
+                    className="text-red-500 text-sm mt-1"
+                    aria-live="assertive"
+                  >
                     {msg}
                   </p>
                 )}
@@ -160,7 +153,10 @@ export default function SignUpForm() {
 
             {/* Confirm Password Field */}
             <div className="space-y-1">
-              <label htmlFor="confirmPassword" className="block text-lg font-bold">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-lg font-bold"
+              >
                 Confirm Password
               </label>
               <div className="relative">
@@ -169,10 +165,20 @@ export default function SignUpForm() {
                   name="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   className={`w-full px-3 py-4 border ${
-                    errors.confirmPassword && touched.confirmPassword ? "border-red-500" : "border-[#00D4FF]"
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "border-red-500"
+                      : "border-[#00D4FF]"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#00D4FF]/50`}
-                  aria-invalid={errors.confirmPassword && touched.confirmPassword ? "true" : "false"}
-                  aria-describedby={errors.confirmPassword && touched.confirmPassword ? "confirmPassword-error" : undefined}
+                  aria-invalid={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "true"
+                      : "false"
+                  }
+                  aria-describedby={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "confirmPassword-error"
+                      : undefined
+                  }
                 />
                 <button
                   type="button"
@@ -180,12 +186,20 @@ export default function SignUpForm() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   aria-label="Toggle confirm password visibility"
                 >
-                  {showConfirmPassword ? <EyeOff size={20} /> : <EyeIcon size={20} />}
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <EyeIcon size={20} />
+                  )}
                 </button>
               </div>
               <ErrorMessage name="confirmPassword">
                 {(msg) => (
-                  <p id="confirmPassword-error" className="text-red-500 text-sm mt-1" aria-live="assertive">
+                  <p
+                    id="confirmPassword-error"
+                    className="text-red-500 text-sm mt-1"
+                    aria-live="assertive"
+                  >
                     {msg}
                   </p>
                 )}
@@ -198,7 +212,11 @@ export default function SignUpForm() {
                 type="submit"
                 disabled={isSubmitting}
                 className={`bg-[#00D4FF] text-2xl w-full font-normal text-[#004755] py-5 px-4 rounded-[30px] transition-colors 
-                ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-[#00D4FF]/90"}`}
+                ${
+                  isSubmitting
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#00D4FF]/90"
+                }`}
               >
                 {isSubmitting ? "Signing up..." : "Sign up"}
               </button>
@@ -211,11 +229,13 @@ export default function SignUpForm() {
       <div className="text-center mt-8">
         <p className="text-gray-700">
           Already Have An Account?{" "}
-          <Link href="/login" className="text-emerald-500 hover:underline">
+          <Link href="/sign-in" className="text-[#0066CC] hover:underline">
             Log in
           </Link>
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Signup;
