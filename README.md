@@ -5,7 +5,7 @@ Next.js frontend for the ByteChain Academy platform.
 ## Prerequisites
 
 - Node.js 20+
-- npm 10+
+- npm 10+ (this repo uses **npm** as its package manager — do not use pnpm)
 - Running backend API (local or deployed)
 
 ## Local setup
