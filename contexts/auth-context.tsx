@@ -5,6 +5,7 @@ import { apiFetch } from "@/lib/api";
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -15,6 +16,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [isLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(() =>
     typeof window !== "undefined" ? !!localStorage.getItem("auth_token") : false
   );
@@ -67,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, signup, logout, forgotPassword, resetPassword }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, signup, logout, forgotPassword, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

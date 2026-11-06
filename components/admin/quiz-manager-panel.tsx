@@ -8,6 +8,7 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -217,10 +218,7 @@ export function QuizManagerPanel({
     }),
   );
 
-  const handleDragEnd = (event: {
-    active: { id: string };
-    over: { id: string } | null;
-  }) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     if (!event.over) return;
     const oldIdx = questions.findIndex(
       (q: QuizQuestionForm & { _sortId?: string }) =>
