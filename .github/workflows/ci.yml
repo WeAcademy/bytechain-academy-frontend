@@ -27,6 +27,13 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Check for a single lockfile
+        run: |
+          if [ -e pnpm-lock.yaml ] || [ -e yarn.lock ]; then
+            echo "This project uses npm only. Remove pnpm-lock.yaml / yarn.lock (see README, 'Package manager')." >&2
+            exit 1
+          fi
+
       - name: Install dependencies
         run: npm ci
 

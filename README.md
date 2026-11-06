@@ -5,8 +5,16 @@ Next.js frontend for the ByteChain Academy platform.
 ## Prerequisites
 
 - Node.js 20+
-- npm 10+
+- npm 10+ (the only supported package manager, see below)
 - Running backend API (local or deployed)
+
+## Package manager
+
+This project uses **npm**. `package-lock.json` is the only lockfile and is committed; CI installs with `npm ci`, so it must stay in sync with `package.json`.
+
+- Install with `npm install` (or `npm ci` for an exact, reproducible install).
+- Do not use pnpm or yarn, and do not commit `pnpm-lock.yaml` or `yarn.lock` (they are git-ignored and CI fails if they appear). Two lockfiles can resolve different dependency versions and make builds differ between machines.
+- When you add or update a dependency, run `npm install <package>` and commit the updated `package-lock.json` together with `package.json`.
 
 ## Local setup
 
