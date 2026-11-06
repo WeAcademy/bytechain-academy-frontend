@@ -114,12 +114,15 @@ Requirements:
 
 - The backend running at the URL in `NEXT_PUBLIC_API_URL` (see above).
 - Browsers installed once: `npx playwright install` (add `--with-deps` on Linux).
+- **Course data in the backend database.** The learning and quiz tests click "Enroll Now" on the first course they find, and the quiz test also needs a lesson with a quiz, so at least one **published** course with a lesson and quiz must already exist. The backend does not create sample courses on its own: against an empty database those tests fail waiting for the "Enroll Now" button. Create one as an admin (see the backend README) before running them.
 
 ```bash
 npm run test:e2e                             # all three browsers: chromium, firefox, webkit
 npm run test:e2e -- --project=chromium       # just one browser (faster)
 npx playwright show-report                   # open the HTML report of the last run
 ```
+
+These tests are not part of CI, so they can drift out of date; if one fails, open the HTML report (`npx playwright show-report`) to see where it stopped.
 
 Playwright starts `npm run dev` itself and reuses a dev server that is already running on port 3000. The tests **create real user accounts** in the backend's database (with unique `@example.com` addresses), so run them against a development database, never production.
 
