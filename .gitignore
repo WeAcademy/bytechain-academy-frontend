@@ -46,3 +46,8 @@ next-env.d.ts
 # Playwright artifacts
 /playwright-report/
 /test-results/
+
+# This project uses npm only (package-lock.json is the single lockfile).
+# Do not commit lockfiles from other package managers.
+pnpm-lock.yaml
+yarn.lock
